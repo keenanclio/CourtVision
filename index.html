@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Field Tracker</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Menggunakan font Poppins agar lebih modern -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">Field<span>Track</span></div>
+        <ul class="nav-links">
+            <li><a href="#" onclick="showPage('home')">Home</a></li>
+            <li><a href="#" onclick="showPage('latar-belakang')">Latar Belakang</a></li>
+            <li><a href="#" onclick="showPage('founder')">Founder</a></li>
+            <li><a href="#" onclick="showPage('kamera')">Kamera Asli</a></li>
+            <li><a href="#" onclick="showPage('map-2d')">Tampilan 2D</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <!-- Halaman Home -->
+        <section id="home" class="page active">
+            <h1>Selamat Datang di Sistem <span>Live Tracking Lapangan</span></h1>
+            <p>Memantau, mendeteksi, dan memvisualisasikan pergerakan pemain secara real-time dari tangkapan kamera ke dalam proyeksi lapangan 2D.</p>
+        </section>
+
+        <!-- Halaman Latar Belakang -->
+        <section id="latar-belakang" class="page">
+            <h2>Latar Belakang Proyek</h2>
+            <p>Proyek ini dikembangkan untuk mempermudah analisis pergerakan di lapangan. Dengan merekam area lapangan dari sudut atas, sistem memproses tangkapan visual tersebut untuk mendeteksi posisi setiap pemain. Data tersebut kemudian ditransformasikan dan disiarkan langsung (live stream) ke dalam bentuk antarmuka 2D, memungkinkan pemantauan strategi dan pergerakan dengan akurasi yang lebih mudah dipahami.</p>
+        </section>
+
+        <!-- Halaman Founder -->
+        <section id="founder" class="page">
+            <h2>Tim <span>Founder</span></h2>
+            <div class="card-container">
+                <div class="card">
+                    <h3>Axelle Reynard Putra</h3>
+                    <p>Developer / Researcher</p>
+                </div>
+                <div class="card">
+                    <h3>Jonathan Emannuel Christian</h3>
+                    <p>Developer / Researcher</p>
+                </div>
+                <div class="card">
+                    <h3>Keenan Clio Adiwinata</h3>
+                    <p>Developer / Researcher</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Halaman Kamera Asli -->
+        <section id="kamera" class="page">
+            <h2>Live Stream <span>Kamera Asli</span></h2>
+            <div class="stream-container">
+                <!-- Nantinya src img ini bisa diganti dengan endpoint streaming dari backend, misal: http://localhost:5000/video_feed -->
+                <div class="video-placeholder">
+                    <p>Menunggu koneksi kamera...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Halaman Tampilan 2D -->
+        <section id="map-2d" class="page">
+            <h2>Live Stream <span>Tampilan 2D</span></h2>
+            <div class="stream-container">
+                <!-- Canvas ini akan digambar oleh JavaScript -->
+                <canvas id="fieldCanvas" width="800" height="500"></canvas>
+            </div>
+            <p class="note">*Titik oranye mewakili pemain yang terdeteksi</p>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
