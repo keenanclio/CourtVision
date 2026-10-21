@@ -1,0 +1,150 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: #121212;
+    color: #ffffff;
+    overflow-x: hidden;
+}
+
+span {
+    color: #ff8c00; /* Warna Oranye */
+}
+
+/* Navigasi */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 50px;
+    background-color: #1a1a1a;
+    border-bottom: 2px solid #ff8c00;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 25px;
+}
+
+.nav-links a {
+    color: #e0e0e0;
+    text-decoration: none;
+    font-size: 16px;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: #ff8c00;
+}
+
+/* Pengaturan Halaman */
+.page {
+    display: none;
+    padding: 60px 20px;
+    text-align: center;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.page.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    margin-top: 50px;
+}
+
+h2 {
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+}
+
+p {
+    font-size: 1.1rem;
+    color: #b3b3b3;
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* Card Founder */
+.card-container {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    margin-top: 40px;
+}
+
+.card {
+    background-color: #1f1f1f;
+    padding: 30px;
+    border-radius: 12px;
+    width: 280px;
+    border-top: 5px solid #ff8c00;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+}
+
+.card h3 {
+    color: #ffffff;
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+}
+
+.card p {
+    font-size: 1rem;
+    color: #ff8c00;
+}
+
+/* Kontainer Stream & Canvas */
+.stream-container {
+    display: flex;
+    justify-content: center;
+    margin: 30px auto;
+}
+
+.video-placeholder {
+    width: 800px;
+    height: 500px;
+    background-color: #000000;
+    border: 2px dashed #555;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+}
+
+#fieldCanvas {
+    background-color: #1a1a1a;
+    border: 3px solid #333;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(255, 140, 0, 0.2);
+}
+
+.note {
+    font-size: 0.9rem;
+    color: #777;
+    margin-top: 10px;
+}
