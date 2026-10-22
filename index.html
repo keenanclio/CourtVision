@@ -3,14 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Live Field Tracker</title>
+    <title>Bird's-Eye View Tracker</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Menggunakan font Poppins agar lebih modern -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
     <nav class="navbar">
-        <div class="logo">Field<span>Track</span></div>
+        <div class="logo">Bird's-Eye<span>Track</span></div>
         <ul class="nav-links">
             <li><a href="#" onclick="showPage('home')">Home</a></li>
             <li><a href="#" onclick="showPage('latar-belakang')">Latar Belakang</a></li>
@@ -23,14 +22,14 @@
     <main>
         <!-- Halaman Home -->
         <section id="home" class="page active">
-            <h1>Selamat Datang di Sistem <span>Live Tracking Lapangan</span></h1>
-            <p>Memantau, mendeteksi, dan memvisualisasikan pergerakan pemain secara real-time dari tangkapan kamera ke dalam proyeksi lapangan 2D.</p>
+            <h1>Sistem <span>Bird's-Eye View Tracker</span> Lapangan Basket</h1>
+            <p>Mendeteksi pemain dari kamera HP dan mentransformasikannya menjadi tampilan coaching board 2D secara live streaming.</p>
         </section>
 
         <!-- Halaman Latar Belakang -->
         <section id="latar-belakang" class="page">
             <h2>Latar Belakang Proyek</h2>
-            <p>Proyek ini dikembangkan untuk mempermudah analisis pergerakan di lapangan. Dengan merekam area lapangan dari sudut atas, sistem memproses tangkapan visual tersebut untuk mendeteksi posisi setiap pemain. Data tersebut kemudian ditransformasikan dan disiarkan langsung (live stream) ke dalam bentuk antarmuka 2D, memungkinkan pemantauan strategi dan pergerakan dengan akurasi yang lebih mudah dipahami.</p>
+            <p>Proyek ini dikembangkan untuk memudahkan analisis strategi dalam olahraga bola basket. Dengan merekam lapangan dari sisi atas menggunakan kamera HP (DroidCam), sistem "Bird's-Eye View Tracker" memproses video untuk mendeteksi pemain. Melalui transformasi matriks, posisi pemain diproyeksikan ke dalam map 2D lurus dari atas secara real-time untuk evaluasi pergerakan yang lebih akurat.</p>
         </section>
 
         <!-- Halaman Founder -->
@@ -52,25 +51,24 @@
             </div>
         </section>
 
-        <!-- Halaman Kamera Asli -->
+        <!-- Halaman Kamera Asli (DroidCam) -->
         <section id="kamera" class="page">
             <h2>Live Stream <span>Kamera Asli</span></h2>
             <div class="stream-container">
-                <!-- Nantinya src img ini bisa diganti dengan endpoint streaming dari backend, misal: http://localhost:5000/video_feed -->
-                <div class="video-placeholder">
-                    <p>Menunggu koneksi kamera...</p>
-                </div>
+                <!-- GANTI IP ADDRESS DI BAWAH INI SESUAI DENGAN IP DROIDCAM DI HP KAMU -->
+                <!-- Contoh format: http://192.168.1.5:4747/video -->
+                <img id="droidcam-stream" src="http://192.168.x.x:4747/video" alt="Menunggu Koneksi DroidCam..." style="width: 800px; height: 500px; background-color: #000; border: 2px dashed #555; border-radius: 10px; object-fit: cover;">
             </div>
+            <p class="note">*Pastikan HP dan Laptop terhubung ke jaringan WiFi yang sama, lalu ubah IP di script HTML sesuai aplikasi DroidCam.</p>
         </section>
 
         <!-- Halaman Tampilan 2D -->
         <section id="map-2d" class="page">
-            <h2>Live Stream <span>Tampilan 2D</span></h2>
+            <h2>Coaching Board <span>2D (Live)</span></h2>
             <div class="stream-container">
-                <!-- Canvas ini akan digambar oleh JavaScript -->
-                <canvas id="fieldCanvas" width="800" height="500"></canvas>
+                <canvas id="fieldCanvas" width="800" height="450"></canvas>
             </div>
-            <p class="note">*Titik oranye mewakili pemain yang terdeteksi</p>
+            <p class="note">*Titik oranye mewakili pemain basket yang terdeteksi</p>
         </section>
     </main>
 
