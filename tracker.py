@@ -5,11 +5,18 @@ import asyncio
 import websockets
 from ultralytics import YOLO
 
-# Load model YOLOv8 nano (ringan dan cepat untuk real-time)
+# Load model YOLOv8 nano
 model = YOLO('yolov8n.pt') 
 
-# Ganti IP di bawah ini SESUAI dengan IP DroidCam di HP kamu (cukup ubah di sini saja)
-VIDEO_URL = "http://192.168.0.136:4747/video" 
+print("=== PILIH SUMBER VIDEO AI ===")
+print("1. Kamera DroidCam (Live)")
+print("2. File Video Basket (Local)")
+pilihan = input("Masukkan angka (1 atau 2): ")
+
+if pilihan == '1':
+    VIDEO_URL = "http://192.168.0.136:4747/video"
+else:
+    VIDEO_URL = "video_basket.mp4" # Sesuaikan dengan nama file videomu
 
 # ==========================================
 # PASTE HASIL KODE KALIBRASI KAMU DI SINI
@@ -31,59 +38,64 @@ pts_dst = np.array([
     [margin, canvas_h - margin]
 ], dtype=np.float32) 
 
-# Matriks transformasi perspektif dari kamera ke map 2D
 matrix = cv2.getPerspectiveTransform(pts_src, pts_dst)
 
-# Fungsi mendeteksi warna baju (HSV)
 def deteksi_tim(frame, x1, y1, x2, y2):
     try:
         h = int(y2 - y1)
         w = int(x2 - x1)
-        # Ambil area dada/badan bagian atas pemain
-        baju = frame[int(y1):int(y1 + h/2), int(x1):int(x2)]
+        baju = frame[int(y1):int(y1 + h/3), int(x1):int(x2)] # Fokus ke bahu/dada atas
         
         hsv = cv2.cvtColor(baju, cv2.COLOR_BGR2HSV)
         
-        # Rentang warna Biru (Tim A)
+        # Rentang warna biru gelap/navy (untuk tim USA)
         lower_blue = np.array([90, 50, 50])
-        upper_blue = np.array([130, 255, 255])
+        upper_blue = np.array([140, 255, 255])
         mask_blue = cv2.inRange(hsv, lower_blue, upper_blue)
         
-        if cv2.countNonZero(mask_blue) > (h * w * 0.1): 
-            return "TimBiru"
+        if cv2.countNonZero(mask_blue) > (h * w * 0.05): 
+            return "TimBiru" # Menggerakkan titik warna biru di JS
         else:
-            return "TimKuning" # Sisanya dianggap Tim B / Kuning
+            return "TimKuning" # Menggerakkan titik warna kuning di JS (untuk baju putih)
     except:
         return "TimKuning"
 
 async def detect_and_send(websocket):
-    print("Menghubungkan ke kamera DroidCam...")
+    print(f"Menghubungkan ke sumber video...")
     cap = cv2.VideoCapture(VIDEO_URL)
     
     if not cap.isOpened():
-        print("❌ Gagal terhubung ke kamera! Periksa kembali URL atau jaringan WiFi.")
+        print("❌ Gagal terhubung ke video!")
         return
 
-    print("✅ Berhasil terhubung ke kamera! Streaming berjalan...")
+    print("✅ Streaming berjalan...")
 
     while cap.isOpened():
         ret, frame = cap.read()
+        
         if not ret:
-            print("⚠️ Kehilangan sinyal video dari kamera.")
-            break
+            if pilihan == '2':
+                # Jika menggunakan file video, ulang video dari awal saat selesai
+                cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
+                continue
+            else:
+                print("⚠️ Kehilangan sinyal DroidCam.")
+                break
 
-        # Deteksi manusia menggunakan YOLOv8 (classes=[0] khusus untuk 'person')
-        results = model(frame, classes=[0], verbose=False)
+        # Filter tinggi bounding box untuk mengabaikan penonton di latar belakang
+        results = model(frame, classes=[0], conf=0.4, verbose=False)
         players_data = []
         
         for r in results:
             for box in r.boxes:
                 x1, y1, x2, y2 = box.xyxy[0]
                 
-                # Cek warna tim berdasarkan baju
+                # Abaikan objek terlalu kecil (kemungkinan besar penonton di tribun)
+                if (y2 - y1) < 40:
+                    continue
+                    
                 tim = deteksi_tim(frame, x1, y1, x2, y2)
                 
-                # Titik tumpuan kaki pemain di lapangan (tengah bawah bounding box)
                 px = float((x1 + x2) / 2)
                 py = float(y2)
                 
@@ -93,17 +105,14 @@ async def detect_and_send(websocket):
                 map_x = int(point_transformed[0][0][0])
                 map_y = int(point_transformed[0][0][1])
                 
-                # Kirim data jika posisi berada di dalam batas kanvas
                 if -50 <= map_x <= 850 and -50 <= map_y <= 500:
                     players_data.append({"x": map_x, "y": map_y, "team": tim})
 
-        # Gambar garis kalibrasi di video asli sebagai referensi
         cv2.polylines(frame, [np.int32(pts_src)], True, (0, 255, 0), 2)
         
         try:
             await websocket.send(json.dumps(players_data))
         except websockets.exceptions.ConnectionClosed:
-            print("⚠️ Koneksi WebSocket dengan browser terputus.")
             break
 
         cv2.imshow("AI Vision - Tracker (Tekan 'q' untuk keluar)", frame)
