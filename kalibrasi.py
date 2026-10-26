@@ -1,8 +1,18 @@
 import cv2
 import numpy as np
 
-# Gunakan IP yang sama dengan tracker
-VIDEO_URL = "http://192.168.0.136:4747/video"
+print("=== PILIH SUMBER VIDEO KALIBRASI ===")
+print("1. Kamera DroidCam (Live)")
+print("2. File Video Basket (Local)")
+pilihan = input("Masukkan angka (1 atau 2): ")
+
+if pilihan == '1':
+    VIDEO_URL = "http://192.168.0.136:4747/video"
+else:
+    # PASTIKAN nama file video ini sama persis dengan yang ada di folder komputermu
+    # Contoh: "video_basket.mp4"
+    VIDEO_URL = "video_basket.mp4" 
+
 points = []
 
 def click_event(event, x, y, flags, params):
@@ -12,15 +22,15 @@ def click_event(event, x, y, flags, params):
         cv2.circle(img, (x,y), 5, (0,0,255), -1)
         cv2.imshow('Kalibrasi Lapangan', img)
 
-print("Menarik 1 frame gambar dari kamera untuk kalibrasi...")
+print("\nMenarik 1 frame gambar untuk kalibrasi...")
 cap = cv2.VideoCapture(VIDEO_URL)
 ret, img = cap.read()
 cap.release()
 
 if not ret:
-    print("❌ Gagal mengambil gambar dari kamera. Periksa koneksi DroidCam!")
+    print("❌ Gagal mengambil gambar. Periksa koneksi DroidCam atau pastikan nama file video benar!")
 else:
-    print("\n✅ Gambar berhasil diambil!")
+    print("✅ Gambar berhasil diambil!")
     print("KLIK 4 SUDUT LAPANGAN SECARA BERURUTAN:")
     print("1. Kiri Atas  2. Kanan Atas  3. Kanan Bawah  4. Kiri Bawah")
     
