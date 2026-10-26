@@ -11,7 +11,7 @@ if pilihan == '1':
 else:
     # PASTIKAN nama file video ini sama persis dengan yang ada di folder komputermu
     # Contoh: "video_basket.mp4"
-    VIDEO_URL = "video_basket.mp4" 
+    VIDEO_URL = "basket.mp4" 
 
 points = []
 
