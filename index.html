@@ -11,11 +11,11 @@
     <nav class="navbar">
         <div class="logo">Bird's-Eye<span>Track</span></div>
         <ul class="nav-links">
-            <li><a href="#" onclick="showPage('home')">Home</a></li>
-            <li><a href="#" onclick="showPage('latar-belakang')">Latar Belakang</a></li>
-            <li><a href="#" onclick="showPage('founder')">Founder</a></li>
-            <li><a href="#" onclick="showPage('kamera')">Kamera Asli</a></li>
-            <li><a href="#" onclick="showPage('map-2d')">Tampilan 2D</a></li>
+            <li><a href="#" onclick="showPage(event, 'home')">Home</a></li>
+            <li><a href="#" onclick="showPage(event, 'latar-belakang')">Latar Belakang</a></li>
+            <li><a href="#" onclick="showPage(event, 'founder')">Founder</a></li>
+            <li><a href="#" onclick="showPage(event, 'kamera')">Kamera Asli</a></li>
+            <li><a href="#" onclick="showPage(event, 'map-2d')">Tampilan 2D</a></li>
         </ul>
     </nav>
 
@@ -55,8 +55,7 @@
         <section id="kamera" class="page">
             <h2>Live Stream <span>Kamera Asli</span></h2>
             <div class="stream-container">
-                <!-- GANTI IP ADDRESS DI BAWAH INI SESUAI DENGAN IP DROIDCAM DI HP KAMU -->
-                <!-- Contoh format: http://192.168.1.5:4747/video -->
+                <!-- Sesuaikan IP dengan DroidCam HP kamu saat ini -->
                 <img id="droidcam-stream" src="http://192.168.0.136:4747/video" alt="Menunggu Koneksi DroidCam..." style="width: 800px; height: 500px; background-color: #000; border: 2px dashed #555; border-radius: 10px; object-fit: cover;">
             </div>
             <p class="note">*Pastikan HP dan Laptop terhubung ke jaringan WiFi yang sama, lalu ubah IP di script HTML sesuai aplikasi DroidCam.</p>
@@ -68,11 +67,11 @@
             <div class="stream-container">
                 <canvas id="fieldCanvas" width="800" height="450"></canvas>
             </div>
-            <p class="note">*Titik oranye mewakili pemain basket yang terdeteksi</p>
+            <p class="note">*Titik biru mewakili Tim Biru dan titik kuning mewakili Tim Kuning</p>
         </section>
     </main>
 
+    <!-- Pemanggilan file JavaScript diletakkan di akhir body agar fungsi langsung siap digunakan -->
     <script src="script.js"></script>
 </body>
 </html>
-
