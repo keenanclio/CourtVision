@@ -16,7 +16,7 @@ pilihan = input("Masukkan angka (1 atau 2): ")
 if pilihan == '1':
     VIDEO_URL = "http://192.168.0.136:4747/video"
 else:
-    VIDEO_URL = "video_basket.mp4" # Sesuaikan dengan nama file videomu
+    VIDEO_URL = "basket.mp4" # Sesuaikan dengan nama file videomu
 
 # ==========================================
 # PASTE HASIL KODE KALIBRASI KAMU DI SINI
