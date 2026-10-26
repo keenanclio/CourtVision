@@ -41,6 +41,7 @@ span {
     color: #e0e0e0;
     text-decoration: none;
     font-size: 16px;
+    cursor: pointer;
     transition: color 0.3s ease;
 }
 
@@ -48,12 +49,12 @@ span {
     color: #ff8c00;
 }
 
-/* Pengaturan Halaman */
+/* Pengaturan Halaman SPA */
 .page {
     display: none;
     padding: 60px 20px;
     text-align: center;
-    animation: fadeIn 0.5s ease-in-out;
+    animation: fadeIn 0.4s ease-in-out;
 }
 
 .page.active {
@@ -66,13 +67,13 @@ span {
 }
 
 h1 {
-    font-size: 3rem;
+    font-size: 2.8rem;
     margin-bottom: 20px;
-    margin-top: 50px;
+    margin-top: 30px;
 }
 
 h2 {
-    font-size: 2.5rem;
+    font-size: 2.2rem;
     margin-bottom: 30px;
 }
 
@@ -118,22 +119,11 @@ p {
     color: #ff8c00;
 }
 
-/* Kontainer Stream & Canvas */
+/* Stream & Canvas */
 .stream-container {
     display: flex;
     justify-content: center;
     margin: 30px auto;
-}
-
-.video-placeholder {
-    width: 800px;
-    height: 500px;
-    background-color: #000000;
-    border: 2px dashed #555;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 10px;
 }
 
 #fieldCanvas {
